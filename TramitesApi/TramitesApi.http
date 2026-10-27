@@ -1,0 +1,6 @@
+@TramitesApi_HostAddress = http://localhost:5058
+
+GET {{TramitesApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
