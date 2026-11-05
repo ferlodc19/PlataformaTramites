@@ -1,5 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using TramitesApi.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+// Configuración de Entity Framework Core con PostgreSQL
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    
 // 1. Agregar soporte para Controladores
 builder.Services.AddControllers();
 

@@ -1,0 +1,36 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity sumador is
+  port (
+    A, B   : in  STD_LOGIC_VECTOR(3 downto 0);  -- Entradas
+    Cout   : out STD_LOGIC;                     -- Carry de salida
+    Resul  : out STD_LOGIC_VECTOR(3 downto 0)   -- Resultado de la suma
+  );
+end sumador;
+
+architecture concurrente of sumador is
+  signal C : STD_LOGIC_VECTOR(3 downto 0); -- Vector para carries
+begin
+
+  -- Bit 0
+  Resul(0) <= A(0) xor B(0);
+  C(0)     <= A(0) and B(0);
+
+  -- Bit 1
+  Resul(1) <= A(1) xor B(1) xor C(0);
+  C(1)     <= (A(1) and B(1)) or (A(1) and C(0)) or (B(1) and C(0));
+
+  -- Bit 2
+  Resul(2) <= A(2) xor B(2) xor C(1);
+  C(2)     <= (A(2) and B(2)) or (A(2) and C(1)) or (B(2) and C(1));
+
+  -- Bit 3
+  Resul(3) <= A(3) xor B(3) xor C(2);
+  C(3)     <= (A(3) and B(3)) or (A(3) and C(2)) or (B(3) and C(2));
+
+  -- Carry final
+  Cout <= C(3);
+
+end concurrente;
